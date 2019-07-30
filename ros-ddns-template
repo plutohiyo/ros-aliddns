@@ -1,0 +1,23 @@
+#aliyun Access Key
+:local id ""
+:local secret ""
+
+#domain
+:local dnsdomain "xxxxx.com"
+:local dnsrecord "www"
+:local dnstype "A"
+
+#PPPoE-out
+:local pppoe "pppoe-out1"
+
+#ip:port of the cgi of the server
+:local serveraddress "http://x.x.x.x:18888"
+
+:local ipaddr [/ip address get [/ip address find interface=$pppoe] address]
+:set ipaddr [:pick $ipaddr 0 ([len $ipaddr] -3)]
+:if ([:len [/interface find name=$pppoe]] = 0 ) do={ :log info "$pppoe: No interface named $pppoe, please check configuration." }
+:if ([ :typeof $ipaddr ] = "nothing" ) do={
+  :log info ("$pppoe: No ip address present on " . $pppoe . ", please check.")
+} else={
+  :local result [/tool fetch url="$serveraddress/cgi-bin/ddns.py?access_key_id=$id&access_secret=$secret&dns_domain_name=$dnsdomain&dns_rr=$dnsrecord&dns_type=$dnstype&dns_value=$ipaddr" as-value output=user];
+}
