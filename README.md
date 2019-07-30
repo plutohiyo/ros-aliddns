@@ -8,10 +8,12 @@ opkg update
 opkg install python3-pip  
 pip3 install -U pip  
 pip3 install aliyun-python-sdk-alidns  
-  
 mkdir -p /root/pythonwww/cgi-bin  
-cd /root/pythonwww  
-nohup python3 -m http.server 18888 --cgi &  
+cd /etc/init.d  
+wget https://raw.githubusercontent.com/plutohiyo/ros-aliddns/master/pythonhttp  
+chmod +x /etc/init.d/pythonhttp  
+/etc/init.d/pythonhttp enable  
+echo "0 5 * * * /etc/init.d/pythonhttp restart" >> /etc/crontabs/root  
   
 #copy the file ddns.py into /root/pythonwww/cgi-bin  
 cd /root/pythonwww/cgi-bin  
