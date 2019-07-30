@@ -14,7 +14,8 @@ cd /root/pythonwww
 nohup python3 -m http.server 18888 --cgi &  
   
 #copy the file ddns.py into /root/pythonwww/cgi-bin  
-  
+cd /root/pythonwww/cgi-bin  
+wget https://raw.githubusercontent.com/plutohiyo/ros-aliddns/master/ddns.py  
 chmod 755 /root/pythonwww/cgi-bin/ddns.py  
   
   
